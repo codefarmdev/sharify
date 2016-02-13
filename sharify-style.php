@@ -453,5 +453,5 @@ background-color:<?php echo get_option('sharify_cpm_skype'); ?>;
 background-color:<?php echo get_option('sharify_cph_skype'); ?>;
 
 }
-<!--Custom css-->
+/* custom css */
 <?php echo get_option('sharify_custom_css'); ?>
