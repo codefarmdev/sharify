@@ -5,7 +5,7 @@
  * Plugin URI: https://wordpress.org/plugins/sharify/
  * Description: Sharify is a fast and simple plugin for sharing buttons on WordPress. The plugin lets you display responsive sharing
  * buttons on your WordPress website!
- * Version: 3.7.1
+ * Version: 4.0
  * Author: imehedidip
  * Author URI: http://twitter.com/mehedih_
  * Text Domain: sharify
@@ -48,7 +48,9 @@ add_action( 'wp_enqueue_scripts', 'sharify_css' );
 //Activate Sharify options
 function activate_sharify()
 {
-	add_option('display_button_facebook'	, 1);
+  add_option('sharify_use_shortlink'	, 0);
+  add_option('sharify_disable_cpt', 1);
+  add_option('display_button_facebook'	, 1);
 	add_option('display_button_linkedin'	, 1);
 	add_option('display_button_twitter'		, 1);
 	add_option('display_button_email'		, 0);
@@ -93,6 +95,7 @@ function activate_sharify()
 	add_option('sharify_cph_mail'			, "#c0392b");
 	add_option('sharify_twitter_via'		, "");
 	add_option('sharify_custom_css'		, "");
+  add_option('sharify_custom_email_msg', "Hey, checkout this web page:");
 }
 register_activation_hook(__FILE__, 'activate_sharify');
 
@@ -100,7 +103,9 @@ if ( 1 == get_option('sharify_remove_data') ){
 //Deactivate Sharify options
 function deactive_sharify()
 {
-	delete_option('display_button_facebook');
+  delete_option('sharify_use_shortlink');
+  delete_option('sharify_disable_cpt');
+  delete_option('display_button_facebook');
 	delete_option('display_button_linkedin');
 	delete_option('display_button_twitter');
 	delete_option('display_button_email');
@@ -144,6 +149,7 @@ function deactive_sharify()
 	delete_option('sharify_cph_mail');
 	delete_option('sharify_twitter_via');
 	delete_option('sharify_custom_css');
+  delete_option('sharify_custom_email_msg');
 }
 register_deactivation_hook(__FILE__, 'deactive_sharify');
 }
@@ -177,6 +183,29 @@ function sharify_catch_that_image()
 	}
 }
 
+/**
+ * Check if a post is a custom post type.
+ * @param  mixed $post Post object or ID
+ * @return boolean
+ */
+function is_custom_post_type( $post = NULL )
+{
+    $all_custom_post_types = get_post_types( array ( '_builtin' => FALSE ) );
+
+    // there are no custom post types
+    if ( empty ( $all_custom_post_types ) )
+        return FALSE;
+
+    $custom_types      = array_keys( $all_custom_post_types );
+    $current_post_type = get_post_type( $post );
+
+    // could not detect current type
+    if ( ! $current_post_type )
+        return FALSE;
+
+    return in_array( $current_post_type, $custom_types );
+}
+
 //Sharify buttons
 function sharify_display_button_buttons($sharify_buttons = "")
 {
@@ -186,6 +215,14 @@ function sharify_display_button_buttons($sharify_buttons = "")
 	$sharify_buttons .= '<div class="sharify-container">';
 	$sharify_buttons .= '<ul>';
 
+  if ( 1 == get_option('sharify_use_shortlink') ){
+    $sharify_share_link = wp_get_shortlink();
+    $sharify_share_link_url = wp_get_shortlink();
+  } else{
+    $sharify_share_link = get_permalink();
+    $sharify_share_link_url = urlencode(get_permalink());
+  }
+
 	if (get_option('sharify_twitter_via')):
 		$sharify_twitter_mention = " - via:" . get_option('sharify_twitter_via');
 	else:
@@ -194,72 +231,72 @@ function sharify_display_button_buttons($sharify_buttons = "")
 
 	if ( 1 == get_option('display_button_twitter') )
 		$sharify_buttons .='<li class="sharify-btn-twitter">
-								<a title="Tweet on Twitter" href="https://twitter.com/intent/tweet?text='.$sharify_post_title.': '.get_permalink(). $sharify_twitter_mention . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+								<a title="Tweet on Twitter" href="https://twitter.com/intent/tweet?text='.$sharify_post_title.': '.$sharify_share_link. $sharify_twitter_mention . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-twitter"></i></span>
 									<span class="sharify-title">Tweet</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_facebook') )
 		$sharify_buttons .='<li class="sharify-btn-facebook">
-								<a title="Share on Facebook" href="http://www.facebook.com/sharer.php?u=' . urlencode(get_permalink()) . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+								<a title="Share on Facebook" href="http://www.facebook.com/sharer.php?u=' . $sharify_share_link_url . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-facebook"></i></span>
 									<span class="sharify-title">Share</span>
-									<span class="sharify-count facebook" data-url="'.get_permalink().'" data-text="'.get_the_title().' - " >0</span>
+									<span class="sharify-count facebook" data-url="'.$sharify_share_link.'" data-text="'.get_the_title().' - " ></span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_skype') )
 		$sharify_buttons .= '<li class="sharify-btn-skype">
-								<a title="Share on Skype" href="https://web.skype.com/share?url=' . get_permalink() . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=417,height=655,toolbar=0\'); return false;">
+								<a title="Share on Skype" href="https://web.skype.com/share?url=' . $sharify_share_link. '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=417,height=655,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-skype"></i></span>
 									<span class="sharify-title">Skype</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_reddit') )
 		$sharify_buttons .= '<li class="sharify-btn-reddit">
-								<a title="Submit to Reddit" href="http://reddit.com/submit?url=' . get_permalink() . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=950,height=450,toolbar=0\'); return false;">
+								<a title="Submit to Reddit" href="http://reddit.com/submit?url=' . $sharify_share_link . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=950,height=450,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-reddit"></i></span>
 									<span class="sharify-title">Reddit</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_google') )
 		$sharify_buttons .= '<li class="sharify-btn-gplus">
-								<a title="Share on Google+" href="http://plus.google.com/share?url=' . get_permalink() . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+								<a title="Share on Google+" href="http://plus.google.com/share?url=' . $sharify_share_link . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-gplus"></i></span>
 									<span class="sharify-title">+1</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_pocket') )
 		$sharify_buttons .= '<li class="sharify-btn-pocket">
-								<a title="Save to read later on Pocket" href="https://getpocket.com/save?url=' . urlencode(get_permalink()) . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+								<a title="Save to read later on Pocket" href="https://getpocket.com/save?url=' . $sharify_share_link_url . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-pocket"></i></span>
 									<span class="sharify-title">Pocket</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_pinterest') )
 		$sharify_buttons .= '<li class="sharify-btn-pinterest">
-								<a title="Share on Pinterest" href="http://pinterest.com/pin/create/button/?url=' . get_permalink() . '&media=' . sharify_catch_that_image() . '' . '&description='. get_the_title() .' - ' . get_permalink(). '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
+								<a title="Share on Pinterest" href="http://pinterest.com/pin/create/button/?url=' . $sharify_share_link . '&media=' . sharify_catch_that_image() . '' . '&description='. get_the_title() .' - ' . $sharify_share_link. '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-pinterest"></i></span>
 									<span class="sharify-title">Pinterest</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_linkedin') )
 		$sharify_buttons .= '<li class="sharify-btn-linkedin">
-								<a title="Share on Linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=' . get_permalink() . '&title='. get_the_title() .'" onclick="if(!document.getElementById(\'td_social_networks_buttons\')){window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;}" >
+								<a title="Share on Linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=' . $sharify_share_link . '&title='. get_the_title() .'" onclick="if(!document.getElementById(\'td_social_networks_buttons\')){window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;}" >
 									<span class="sharify-icon"><i class="sharify sharify-linkedin"></i></span>
 									<span class="sharify-title">LinkedIn</span>
-									<span class="sharify-count linkedin" data-url="'.get_permalink().'" data-text="'.get_the_title().' - " >0</span>
+									<span class="sharify-count linkedin" data-url="'.$sharify_share_link.'" data-text="'.get_the_title().' - " >0</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_email') )
 		$sharify_buttons .= '<li class="sharify-btn-email">
-								<a title="Share via mail" href="mailto:?subject='.get_the_title().'&body=Hey, checkout this great article: '.get_permalink().'">
+								<a title="Share via mail" href="mailto:?subject='.get_the_title().'&body='.get_option('sharify_custom_email_msg'). ' - ' . $sharify_share_link.'">
 									<span class="sharify-icon"><i class="sharify sharify-mail"></i></span>
 									<span class="sharify-title">Email</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_vk') )
 		$sharify_buttons .= '<li class="sharify-btn-vk">
-								<a title="Share on VKontakte" href="http://vkontakte.ru/share.php?url=' . get_permalink() . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=950,height=450,toolbar=0\'); return false;">
+								<a title="Share on VKontakte" href="http://vkontakte.ru/share.php?url=' . $sharify_share_link . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=950,height=450,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-vk"></i></span>
 									<span class="sharify-title">VKontakte</span>
 								</a>
@@ -272,9 +309,14 @@ function sharify_display_button_buttons($sharify_buttons = "")
 //Add Sharify buttons automatically
 function sharify_show_buttons_on_single($sharify_buttons)
 {
-    if ( is_single() && ( 1 == get_option('display_buttons_under_post') )  ) {
-		$sharify_buttons = sharify_display_button_buttons($sharify_buttons);
-	}
+    if (1 == get_option('sharify_disable_cpt') && is_custom_post_type()){
+
+    } else{
+      if ( is_single() && ( 1 == get_option('display_buttons_under_post') )){
+  		    $sharify_buttons = sharify_display_button_buttons($sharify_buttons);
+      }
+    }
+
 
 	return $sharify_buttons;
 }
@@ -283,10 +325,14 @@ add_filter('the_content', 'sharify_show_buttons_on_single');
 
 function sharify_show_buttons_on_single_top($content)
 {
-	if ( is_single() && ( 1 == get_option('display_buttons_before_post') ) ){
-		$add_sharify = sharify_display_button_buttons($sharify_buttons);
-		$content = $add_sharify . $content;
-	}
+  if (1 == get_option('sharify_disable_cpt') && is_custom_post_type()){
+
+  } else{
+  	if ( is_single() && ( 1 == get_option('display_buttons_before_post') ) ) {
+  		$add_sharify = sharify_display_button_buttons($sharify_buttons);
+  		$content = $add_sharify . $content;
+  	}
+  }
 
 	return $content;
 }
@@ -298,10 +344,8 @@ function load_sharify_wp_admin_style()
 {
     wp_register_style('sharify_admin_css', plugin_dir_url( __FILE__ ) . 'admin/sharify-admin.css' );
     wp_enqueue_style( 'sharify_admin_css' );
-    wp_register_style('sharify_icon', plugin_dir_url( __FILE__ ) . 'icon/css/sharify.css' );
-    wp_enqueue_style( 'sharify_icon' );
     wp_enqueue_style( 'wp-color-picker' );
-	wp_enqueue_script('iris', admin_url( 'js/iris.min.js' ), array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), false,1);
+	  wp_enqueue_script('iris', admin_url( 'js/iris.min.js' ), array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), false,1);
     wp_enqueue_script( 'my-script-handle', plugins_url('admin/sharify.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 }
 

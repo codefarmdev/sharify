@@ -1,7 +1,7 @@
 # Sharify Social Share Buttons#
 
 
- 
+
 Sharify lets you add Social Share Buttons for Twitter, Facebok, Google+ and more to your WordPress website easily!
 
 ## Description ##
@@ -35,16 +35,12 @@ Sharify is the fastest sharing plugin for WordPress. The plugin comes with cachi
 
 Sharify comes with an admin panel where you can customize any settings you want. You can display and hide any sharing button you want. You can also disable caching and change the cache period. I'll be adding more options to the admin panel soon as well!
 
-### Weekly Updates ###
-
-I update the plugin weekly to add new feature and fix bugs. You'll never face any problem with the plugin as we try to fix and release an update for every important bugs as soon as possible!
-
 
 If you've any problems with the plugin or would like to feedback, please <a href="http://twitter.com/mehedih_" target="_self" title="Feedback is really appreciated! ">let me know at Twitter: @mehedih</a>. Also, if you like and use the plugin, <a href="https://wordpress.org/support/view/plugin-reviews/sharify" target="_self" title="Please leave a review! :)">a review is really appreciated as well! </a>
 
 
 ### Thanks for using the plugin! ###
- 
+
 
 ## Installation ##
 
@@ -58,7 +54,7 @@ That's it, Sharify is now activated on your site!
 
 Download Sharify and then extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
- 
+
 ## Frequently Asked Questions ##
 
 **How to hide a sharing button?**
@@ -71,6 +67,13 @@ Sharify caches the sharing count for 30 minutes!
 
 
 ## Changelog ##
+
+### 4.0 ###
+
+* Added the ability to use shortlinks for share links
+* Added the ability to customize the email message for the Email sharing button
+* Added the ability to disable Sharify on Custom Post types
+* Other improvements
 
 ### 3.7.1 ###
 
@@ -113,7 +116,7 @@ Sharify caches the sharing count for 30 minutes!
 
 * Fixed an issue which disabled users from adding two Sharify boxes in some pages. You can now display multiple share boxes (thanks <a href="https://twitter.com/Felix_MC">Felix</a> and <a href="https://twitter.com/alexstovbur">Alex</a>)
 * Fixes spelling error for VKontakte (thanks Dima S.)
-* Fixed the bug which caused buttons to link to a wrong social network. 
+* Fixed the bug which caused buttons to link to a wrong social network.
 
 ### 3.4.6 ###
 
@@ -194,7 +197,7 @@ Sharify caches the sharing count for 30 minutes!
 ### 1.9.2 ###
 
 * Fix: An issue where Facebook Share Count won't appear if there is a integer on the permalink (url)
-* Removed: Caching for some issues with Facebook's API. It'll be added with the next major update, I promise. 
+* Removed: Caching for some issues with Facebook's API. It'll be added with the next major update, I promise.
 
 ### 1.9.1 ###
 
@@ -269,7 +272,7 @@ Sharify caches the sharing count for 30 minutes!
 ## Other info ##
 
 **Requires at least:** 3.5
-  
+
 **Tested up to:** 4.4
-  
+
 **Stable tag:** 3.7.1

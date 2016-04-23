@@ -33,30 +33,26 @@
 	<h2 class="sharify-logo">Sharify</h2>
 	<!--Sharify main-->
 	<div class="sharify-inner">
-		<header><span class="sharify-logo-main">Sharify</span><span class="sharify-version"><a href="https://wordpress.org/plugins/sharify/changelog/" title="Checkout the changelog!">Verison 3.7.1</a></span></header>
+		<header><span class="sharify-logo-main">Sharify</span><span class="sharify-version"><a href="https://wordpress.org/plugins/sharify/changelog/" title="Checkout the changelog!">Verison 4.0</a></span></header>
 		<div class="sharify-main">
 			<div class="sharify-settings">
 				<!--Button Placement-->
-				<!--Easter egg for the peeps at WinBeta.org ;)-->
-				<?php if (get_site_url() == "http://winbeta.org") {
-					echo "<h3>Hey dere guys Mehedi here from wmpu, and this is where you customize the plugin...tara!</h3><br/>";
-				} else{
-					//sleep
-				}
-
-				?>
 				<div class="sharify-sec-title"><a href="https://twitter.com/sharifyplugin">Follow us on Twitter to get support!</a></div><br/>
 				<div class="sharify-sec-title">General Settings</div>
 				<form method="post" class="sharify-settings-form" action="options.php">
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>		
+					<?php settings_fields('sharify');?>
 					<div id="general-settings" class="sharify-setting-wrap">
-						<br><label><input class="sharify-input" type="checkbox" name="display_buttons_under_post" value="1" 
+						<br><label><input class="sharify-input" type="checkbox" name="display_buttons_under_post" value="1"
 						<?php if ( 1 == get_option('display_buttons_under_post') ) echo 'checked="checked"'; ?> /> Display Sharify buttons at the bottom of posts</label> <br>
-						<br><label><input class="sharify-input" type="checkbox" name="display_buttons_before_post" value="1" 
+						<br><label><input class="sharify-input" type="checkbox" name="display_buttons_before_post" value="1"
 						<?php if ( 1 == get_option('display_buttons_before_post') ) echo 'checked="checked"'; ?> /> Display Sharify buttons at the top of posts</label> <br>
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_use_gfont" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_use_gfont" value="1"
 						<?php if ( 1 == get_option('sharify_use_gfont') ) echo 'checked="checked"'; ?> /> Load Google Font?</label><br />
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_use_shortlink" value="1"
+						<?php if ( 1 == get_option('sharify_use_shortlink') ) echo 'checked="checked"'; ?> /> Use shortlink?</label><br />
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_disable_cpt" value="1"
+						<?php if ( 1 == get_option('sharify_disable_cpt') ) echo 'checked="checked"'; ?> /> Disable on Custom Post Types?</label><br />
 						<br /><p class="sharify-version-no"><strong>Custom CSS Styles</strong></p>
 						<textarea rows="4" cols="50" name="sharify_custom_css"><?php echo get_option('sharify_custom_css'); ?></textarea>
 						<br />
@@ -66,13 +62,13 @@
 					<!--Twitter-->
 					<br /><div class="sharify-sec-title">Twitter</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="twitter" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_twitter" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_twitter" value="1"
 						<?php if ( 1 == get_option('display_button_twitter') ) echo 'checked="checked"'; ?> /> Display Twitter button?</label>
-						<br><br><label><input type="checkbox" class="sharify-input" name="sharify_twitter_btn_size" value="1" 
+						<br><br><label><input type="checkbox" class="sharify-input" name="sharify_twitter_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_twitter_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Twitter?</label><br />
-						
+
 						<p class="sharify-version-no"><strong>Twitter Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_twitter'); ?>" name="sharify_cpm_twitter" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>Twitter Button hover color</strong></p>
@@ -86,13 +82,13 @@
 					<!--Facebook-->
 					<br/><div class="sharify-sec-title">Facebook</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="facebook" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_facebook" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_facebook" value="1"
 						<?php if ( 1 == get_option('display_button_facebook') ) echo 'checked="checked"'; ?> /> Display Facebook button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_facebook_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_facebook_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_facebook_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Facebook?</label><br />
-						
+
 						<p class="sharify-version-no"><strong>Facebook Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_fb'); ?>" name="sharify_cpm_fb" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>Facebook Button hover color</strong></p>
@@ -103,11 +99,11 @@
 					<!--GPLUS-->
 					<br /><div class="sharify-sec-title">Google+</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="gplus" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_google" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_google" value="1"
 						<?php if ( 1 == get_option('display_button_google') ) echo 'checked="checked"'; ?> /> Display Google Plus button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_gplus_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_gplus_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_gplus_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Google Plus?</label><br />
 
 						<p class="sharify-version-no"><strong>Google+ Button main color</strong></p>
@@ -116,32 +112,32 @@
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_gplus'); ?>" name="sharify_cph_gplus" class="sharify-cp color-picker" />
 						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
-					
+
 					<br /><div class="sharify-sec-title">Skype</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="skype" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_skype" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_skype" value="1"
 						<?php if ( 1 == get_option('display_button_skype') ) echo 'checked="checked"'; ?> /> Display Skype Button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_skype_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_skype_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_skype_btn_size') ) echo 'checked="checked"'; ?> /> Display Small Button</label><br />
-						
+
 						<p class="sharify-version-no"><strong>skype Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_skype'); ?>" name="sharify_cpm_skype" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>skype Button hover color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_skype'); ?>" name="sharify_cph_skype" class="sharify-cp color-picker" />
-						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>				
+						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
 
 
 					<!--LinkedIn-->
 					<br/><div class="sharify-sec-title">LinkedIn</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="linkedin" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_linkedin" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_linkedin" value="1"
 						<?php if ( 1 == get_option('display_button_linkedin') ) echo 'checked="checked"'; ?> /> Display LinkedIn button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_linkedin_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_linkedin_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_linkedin_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for LinkedIn?</label><br />
 
 						<p class="sharify-version-no"><strong>LinkedIn Button main color</strong></p>
@@ -155,13 +151,13 @@
 					<!--Pinterest-->
 					<br/><div class="sharify-sec-title">Pinterest</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="pinterest" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_pinterest" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_pinterest" value="1"
 						<?php if ( 1 == get_option('display_button_pinterest') ) echo 'checked="checked"'; ?> /> Display Pinterest button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_pinterest_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_pinterest_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_pinterest_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Pinterest?</label><br />
-						
+
 						<p class="sharify-version-no"><strong>Pinterest Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_pin'); ?>" name="sharify_cpm_pin" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>Pinterest Button hover color</strong></p>
@@ -172,28 +168,28 @@
 					<!--Reddit-->
 					<br/><div class="sharify-sec-title">Reddit</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="reddit" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_reddit" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_reddit" value="1"
 						<?php if ( 1 == get_option('display_button_reddit') ) echo 'checked="checked"'; ?> /> Display Reddit button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_reddit_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_reddit_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_reddit_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Reddit?</label><br />
 
 						<p class="sharify-version-no"><strong>Reddit Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_rdt'); ?>" name="sharify_cpm_rdt" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>Reddit Button hover color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_rdt'); ?>" name="sharify_cph_rdt" class="sharify-cp color-picker" />
-						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>					
+						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
 
 					<!--Pocket-->
 					<br /><div class="sharify-sec-title">Pocket</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="pocket" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_pocket" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_pocket" value="1"
 						<?php if ( 1 == get_option('display_button_pocket') ) echo 'checked="checked"'; ?> /> Display Pocket button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_pocket_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_pocket_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_pocket_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for Pocket?</label><br />
 
 						<p class="sharify-version-no"><strong>Pocket Button main color</strong></p>
@@ -201,51 +197,55 @@
 						<br /><p class="sharify-version-no"><strong>Pocket Button hover color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_pkt'); ?>" name="sharify_cph_pkt" class="sharify-cp color-picker" />
 						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
-					
+
 					</div>
 
 					<!--VK-->
 					<br /><div class="sharify-sec-title">VKontakte</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="vk" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_vk" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_vk" value="1"
 						<?php if ( 1 == get_option('display_button_vk') ) echo 'checked="checked"'; ?> /> Display VKontakte button?</label><br />
-						<br /><label><input type="checkbox" class="sharify-input" name="sharify_vk_btn_size" value="1" 
+						<br /><label><input type="checkbox" class="sharify-input" name="sharify_vk_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_vk_btn_size') ) echo 'checked="checked"'; ?> /> Display small button for VKontake?</label><br />
 
 						<p class="sharify-version-no"><strong>VKontakte Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_vk'); ?>" name="sharify_cpm_vk" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>VKontakte Button hover color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_vk'); ?>" name="sharify_cph_vk" class="sharify-cp color-picker" />
-						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>			
+						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
 
 					<br /><div class="sharify-sec-title">Email</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="email" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="display_button_email" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="display_button_email" value="1"
 						<?php if ( 1 == get_option('display_button_email') ) echo 'checked="checked"'; ?> /> Display Email Button?</label><br />
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_email_btn_size" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_email_btn_size" value="1"
 						<?php if ( 1 == get_option('sharify_email_btn_size') ) echo 'checked="checked"'; ?> /> Display Small Button</label><br />
-						
+
 						<p class="sharify-version-no"><strong>Email Button main color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cpm_mail'); ?>" name="sharify_cpm_mail" class="sharify-cp color-picker" />
 						<br /><p class="sharify-version-no"><strong>Email Button hover color</strong></p>
 						<input type="text" id="color" value="<?php echo get_option('sharify_cph_mail'); ?>" name="sharify_cph_mail" class="sharify-cp color-picker" />
-						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>				
+
+						<br /><p class="sharify-version-no"><strong>Custom Email Share Message</strong></p>
+						<textarea rows="4" cols="50" name="sharify_custom_email_msg"><?php echo get_option('sharify_custom_email_msg'); ?></textarea><br/>
+						<em>Note: The link to the article will be automatically added after the text</em>
+						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
-	
+
 					<br /><div class="sharify-sec-title">Uninstall</div>
 					<?php wp_nonce_field('update-options'); ?>
-					<?php settings_fields('sharify');?>	
+					<?php settings_fields('sharify');?>
 					<div id="email" class="sharify-setting-wrap">
-						<br><label><input type="checkbox" class="sharify-input" name="sharify_remove_data" value="1" 
+						<br><label><input type="checkbox" class="sharify-input" name="sharify_remove_data" value="1"
 						<?php if ( 1 == get_option('sharify_remove_data') ) echo 'checked="checked"'; ?> /> Remove Settings Data when unsinstalling? (will remove all Sharify data from database)</label><br />
-						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>					
+						<p class="submit"><input type="submit" class="sharify-btn" value="<?php _e('Save Changes') ?>" /></p>
 					</div>
-			</form>	
+			</form>
 			</div>
 		</div>
 	</div>

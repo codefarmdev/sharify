@@ -46,6 +46,9 @@ function admin_init_sharify() {
 	register_setting('sharify', 'sharify_remove_data');
 	register_setting('sharify', 'sharify_twitter_via');
 	register_setting('sharify', 'sharify_custom_css');
+	register_setting('sharify', 'sharify_use_shortlink');
+	register_setting('sharify', 'sharify_disable_cpt');
+	register_setting('sharify', 'sharify_custom_email_msg');
 }
 
 //Add Options Page
@@ -60,7 +63,7 @@ function admin_menu_sharify() {
 
 //Include Sharify options
 function options_page_sharify() {
-  include( 'sharify_options.php' );  
+  include( 'sharify_options.php' );
 }
 
 //Check if its admin
