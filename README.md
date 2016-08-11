@@ -10,7 +10,7 @@ Sharify lets you add Social Share Buttons for Twitter, Facebok, Google+ and more
 
 Introducing Sharify, a simple and fast plugin that lets you add beautiful sharing buttons to your WordPress website!
 
-**<a href="http://wmpoweruser.com/introducing-the-wmpoweruser-podcast/" target="_blank">LIVE DEMO</a> - <a href="https://wordpress.org/support/view/plugin-reviews/sharify" target="_self">LEAVE A REVIEW</a>**
+**<a href="http://mspoweruser.com/exclusive-first-look-microsofts-plans-messaging-everywhere-integration-skype-uwp/" target="_blank">LIVE DEMO</a> - <a href="https://wordpress.org/support/view/plugin-reviews/sharify" target="_self">LEAVE A REVIEW</a>**
 
 **Features**
 
