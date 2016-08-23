@@ -5,7 +5,7 @@
  * Plugin URI: https://wordpress.org/plugins/sharify/
  * Description: Sharify is a fast and simple plugin for sharing buttons on WordPress. The plugin lets you display responsive sharing
  * buttons on your WordPress website!
- * Version: 4.0
+ * Version: 4.1
  * Author: imehedidip
  * Author URI: http://twitter.com/mehedih_
  * Text Domain: sharify
@@ -34,7 +34,7 @@ function sharify_css()
     wp_register_style( 'sharify-icon', plugins_url( 'icon/css/sharify.css', __FILE__ ), false, NULL, 'all' );
 	wp_enqueue_style('sharify');
 	wp_enqueue_style('sharify-icon');
-	wp_enqueue_script( 'sharify-counts', plugins_url( 'admin/inc/sharifycounts.js', __FILE__ ), array( 'jquery' ), '1.2', true );
+	wp_enqueue_script( 'sharify-counts', plugins_url( 'admin/inc/sharifycounts.js', __FILE__ ), array( 'jquery' ), '1.4', true );
 
 	if ( 1 == get_option('sharify_use_gfont') )
 	{
@@ -241,7 +241,7 @@ function sharify_display_button_buttons($sharify_buttons = "")
 								<a title="Share on Facebook" href="http://www.facebook.com/sharer.php?u=' . $sharify_share_link_url . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-facebook"></i></span>
 									<span class="sharify-title">Share</span>
-									<span class="sharify-count facebook" data-url="'.$sharify_share_link.'" data-text="'.get_the_title().' - " ></span>
+									<span class="sharify-count">0</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_skype') )
@@ -277,6 +277,7 @@ function sharify_display_button_buttons($sharify_buttons = "")
 								<a title="Share on Pinterest" href="http://pinterest.com/pin/create/button/?url=' . $sharify_share_link . '&media=' . sharify_catch_that_image() . '' . '&description='. get_the_title() .' - ' . $sharify_share_link. '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-pinterest"></i></span>
 									<span class="sharify-title">Pinterest</span>
+									<span class="sharify-count">0</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_linkedin') )
@@ -284,7 +285,7 @@ function sharify_display_button_buttons($sharify_buttons = "")
 								<a title="Share on Linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=' . $sharify_share_link . '&title='. get_the_title() .'" onclick="if(!document.getElementById(\'td_social_networks_buttons\')){window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;}" >
 									<span class="sharify-icon"><i class="sharify sharify-linkedin"></i></span>
 									<span class="sharify-title">LinkedIn</span>
-									<span class="sharify-count linkedin" data-url="'.$sharify_share_link.'" data-text="'.get_the_title().' - " >0</span>
+									<span class="sharify-count">0</span>
 								</a>
 							</li>';
 	if ( 1 == get_option('display_button_email') )

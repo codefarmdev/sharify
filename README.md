@@ -1,7 +1,6 @@
 # Sharify Social Share Buttons#
 
 
-
 Sharify lets you add Social Share Buttons for Twitter, Facebok, Google+ and more to your WordPress website easily!
 
 ## Description ##
@@ -67,6 +66,12 @@ Sharify caches the sharing count for 30 minutes!
 
 
 ## Changelog ##
+
+### 4.1 ###
+
+* Fixed Facebook Share Count
+* Changed how Share Counts are handled 
+* Added Pinterest share count
 
 ### 4.0 ###
 
