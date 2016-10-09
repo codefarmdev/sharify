@@ -240,7 +240,7 @@ function sharify_display_button_buttons($sharify_buttons = "")
 		$sharify_buttons .='<li class="sharify-btn-facebook">
 								<a title="Share on Facebook" href="http://www.facebook.com/sharer.php?u=' . $sharify_share_link_url . '" onclick="window.open(this.href, \'mywin\',\'left=50,top=50,width=600,height=350,toolbar=0\'); return false;">
 									<span class="sharify-icon"><i class="sharify sharify-facebook"></i></span>
-									<span class="sharify-title">Share</span>
+									<span class="sharify-title">Compartilhe</span>
 									<span class="sharify-count">0</span>
 								</a>
 							</li>';
