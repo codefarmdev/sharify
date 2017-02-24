@@ -61,9 +61,9 @@ function activate_sharify()
 	add_option('display_button_pocket'		, 0);
 	add_option('display_button_vkt'		    , 0);
 	add_option('display_button_skype'		, 0);
-	add_option('sharify_twitter_btn_size'	, 1);
-	add_option('sharify_facebook_btn_size'	, 1);
-	add_option('sharify_gplus_btn_size'	    , 1);
+	add_option('sharify_twitter_btn_size'	, 0);
+	add_option('sharify_facebook_btn_size'	, 0);
+	add_option('sharify_gplus_btn_size'	    , 0);
 	add_option('sharify_reddit_btn_size'	, 0);
 	add_option('sharify_pocket_btn_size'	, 0);
 	add_option('sharify_pinterest_btn_size'	, 0);
